@@ -9,11 +9,9 @@ Route::post('/absensi', [AbsensiController::class, 'store'])->name('absensi.stor
 Route::get('/absensi/hasil', [AbsensiController::class, 'hasil'])->name('absensi.hasil');
 Route::get('/rolet-undian/tampilan', [RoletUndianController::class, 'display'])->name('rolet.display');
 Route::get('/rolet-undian/latest-json', [RoletUndianController::class, 'latestJson'])->name('rolet.latest');
-/*
-|--------------------------------------------------------------------------
-| Halaman Admin 
-|--------------------------------------------------------------------------
-*/
+
+// Halaman Admin
+
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
