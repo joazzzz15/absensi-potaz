@@ -7,181 +7,267 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: sans-serif;
-            font-size: 11px;
-            color: #222;
-            padding: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12px;
+            color: #000;
+            padding: 24px 28px;
+            line-height: 1.4;
         }
 
-        .header {
+        /* ================= KOP LAPORAN ================= */
+        .kop {
             text-align: center;
-            margin-bottom: 16px;
+            border-bottom: 3px double #000;
+            padding-bottom: 10px;
+            margin-bottom: 18px;
         }
 
-        .header h1 {
-            font-size: 16px;
-            color: #7a1010;
+        .kop .instansi {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .kop .alamat {
+            font-size: 10.5px;
+            margin-top: 2px;
+        }
+
+        .judul-laporan {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .judul-laporan h1 {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: underline;
+            letter-spacing: 0.3px;
+        }
+
+        .judul-laporan p {
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        /* ================= INFO CETAK ================= */
+        .info-cetak {
+            width: 100%;
+            margin-bottom: 14px;
+            font-size: 11px;
+        }
+
+        .info-cetak td {
+            padding: 1px 0;
+            vertical-align: top;
+        }
+
+        .info-cetak td.label {
+            width: 120px;
+        }
+
+        .info-cetak td.titik-dua {
+            width: 14px;
+        }
+
+        /* ================= TABEL DATA ================= */
+        table.tabel-data {
+            width: 100%;
+            border-collapse: collapse;
             margin-bottom: 4px;
         }
 
-        .header p {
-            font-size: 11px;
-            color: #555;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        thead th {
-            text-align: left;
-            padding: 8px 10px;
-            background: #faf5ea;
-            color: #7a1010;
+        table.tabel-data th {
+            text-align: center;
+            padding: 7px 8px;
+            background: #e9e9e9;
             font-weight: 700;
-            border: 1px solid #e0d6c0;
+            border: 1px solid #000;
+            font-size: 11px;
         }
 
-        tbody td {
-            padding: 6px 10px;
-            border: 1px solid #eee;
+        table.tabel-data td {
+            padding: 5px 8px;
+            border: 1px solid #000;
+            font-size: 11px;
         }
 
-        tbody tr:nth-child(even) {
-            background: #fafafa;
+        table.tabel-data td.center {
+            text-align: center;
         }
 
         .footer-note {
-            margin-top: 18px;
-            font-size: 10px;
-            color: #555;
+            margin-top: 6px;
+            font-size: 9.5px;
+            color: #333;
             text-align: right;
+            font-style: italic;
         }
 
-        /* === Rekap === */
+        /* ================= REKAP ================= */
         .rekap-wrap {
-            margin-top: 26px;
+            margin-top: 28px;
             page-break-inside: avoid;
         }
 
         .rekap-title {
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 700;
-            color: #7a1010;
-            margin-bottom: 10px;
-            padding-bottom: 4px;
-            border-bottom: 1.5px solid #7a1010;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 14px;
+            padding-bottom: 6px;
+            border-bottom: 1.5px solid #000;
         }
 
         .rekap-section {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         .rekap-section-label {
-            font-size: 11px;
+            font-size: 11.5px;
             font-weight: 700;
-            color: #444;
             margin-bottom: 6px;
         }
 
-        .rekap-table {
+        table.rekap-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 4px;
         }
 
-        .rekap-table th {
-            text-align: left;
-            padding: 6px 10px;
-            background: #faf5ea;
-            color: #7a1010;
+        table.rekap-table th {
+            text-align: center;
+            padding: 6px 8px;
+            background: #e9e9e9;
             font-weight: 700;
-            border: 1px solid #e0d6c0;
+            border: 1px solid #000;
             font-size: 10.5px;
         }
 
-        .rekap-table td {
-            padding: 6px 10px;
-            border: 1px solid #eee;
+        table.rekap-table td {
+            padding: 6px 8px;
+            border: 1px solid #000;
             font-size: 10.5px;
         }
 
-        .rekap-table td.angka,
-        .rekap-table th.angka {
+        table.rekap-table td.angka,
+        table.rekap-table th.angka {
             text-align: center;
             width: 60px;
         }
 
-        .rekap-table tfoot td {
+        table.rekap-table tfoot td {
             font-weight: 700;
-            background: #fdf3e0;
-            color: #7a1010;
+            background: #f2f2f2;
         }
 
-        .ringkasan-grid {
-            display: table;
+        /* Ringkasan total hadir & tepat waktu */
+        table.ringkasan-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 4px;
         }
 
-        .ringkasan-row {
-            display: table-row;
-        }
-
-        .ringkasan-box {
-            display: table-cell;
+        table.ringkasan-table td {
             width: 50%;
+            border: 1px solid #000;
             padding: 10px 14px;
-            border: 1px solid #eecf9a;
-            background: #fdf3e0;
             vertical-align: middle;
         }
 
-        .ringkasan-box + .ringkasan-box {
-            border-left: none;
-        }
-
         .ringkasan-label {
-            font-size: 10px;
-            color: #8a6414;
-            margin-bottom: 2px;
+            font-size: 10.5px;
+            margin-bottom: 3px;
         }
 
         .ringkasan-value {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
-            color: #7a1010;
+        }
+
+        /* ================= TANDA TANGAN ================= */
+        .ttd-wrap {
+            margin-top: 46px;
+            page-break-inside: avoid;
+        }
+
+        table.ttd-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table.ttd-table td {
+            width: 50%;
+            text-align: center;
+            font-size: 11.5px;
+            vertical-align: top;
+            padding: 0 20px;
+        }
+
+        .ttd-tempat-tanggal {
+            margin-bottom: 4px;
+        }
+
+        .ttd-jabatan {
+            margin-bottom: 60px;
+        }
+
+        .ttd-nama {
+            font-weight: 700;
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Laporan Kehadiran Malam Tirakatan Puri Potorono Asri</h1>
-        <p>16 Agustus 2026</p>
+    {{-- ================= KOP ================= --}}
+    <div class="kop">
+        <div class="instansi">Panitia Malam Tirakatan HUT RI Ke-81</div>
+        <div class="instansi">Perumahan Puri Potorono Asri</div>
+        <div class="alamat">Potorono, Banguntapan, Bantul, Daerah Istimewa Yogyakarta</div>
     </div>
 
-    <table>
+    <div class="judul-laporan">
+        <h1>Laporan Kehadiran Peserta</h1>
+        <p>Malam Tirakatan Peringatan HUT Kemerdekaan Republik Indonesia Ke-81</p>
+    </div>
+
+    {{-- ================= INFO CETAK ================= --}}
+    <table class="info-cetak">
+        <tr>
+            <td class="label">Hari / Tanggal Kegiatan</td>
+            <td class="titik-dua">:</td>
+            <td>Minggu, 16 Agustus 2026</td>
+        </tr>
+        <tr>
+            <td class="label">Jumlah Data Peserta</td>
+            <td class="titik-dua">:</td>
+            <td>{{ $data->count() }} orang</td>
+        </tr>
+    </table>
+
+    {{-- ================= TABEL DATA ================= --}}
+    <table class="tabel-data">
         <thead>
             <tr>
                 <th style="width:5%;">No</th>
-                <th style="width:35%;">Nama Lengkap</th>
-                <th style="width:10%;">Usia</th>
-                <th style="width:10%;">Blok</th>
+                <th style="width:32%;">Nama Lengkap</th>
+                <th style="width:9%;">Usia</th>
+                <th style="width:9%;">Blok</th>
                 <th style="width:15%;">No. Rumah</th>
-                <th style="width:25%;">Waktu Daftar</th>
+                <th style="width:30%;">Waktu Daftar</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($data as $i => $row)
                 <tr>
-                    <td>{{ $i + 1 }}</td>
+                    <td class="center">{{ $i + 1 }}</td>
                     <td>{{ $row->nama_lengkap }}</td>
-                    <td>{{ $row->usia }}</td>
-                    <td>{{ $row->blok_rumah }}</td>
-                    <td>{{ $row->nomor_rumah }}</td>
-                    <td>{{ $row->created_at->copy()->addHours(7)->format('d M Y H:i') }}</td>
+                    <td class="center">{{ $row->usia }}</td>
+                    <td class="center">{{ $row->blok_rumah }}</td>
+                    <td class="center">{{ $row->nomor_rumah }}</td>
+                    <td class="center">{{ $row->created_at->copy()->addHours(7)->format('d M Y H:i') }}</td>
                 </tr>
             @empty
                 <tr>
@@ -191,24 +277,28 @@
         </tbody>
     </table>
 
+    <div class="footer-note">
+        Dicetak pada tanggal {{ $dicetakPada }}
+    </div>
+
     {{-- ================= REKAP LAPORAN ================= --}}
     <div class="rekap-wrap">
         <div class="rekap-title">Rekapitulasi Kehadiran</div>
 
         {{-- Ringkasan angka besar: total hadir & tepat waktu --}}
         <div class="rekap-section">
-            <div class="ringkasan-grid">
-                <div class="ringkasan-row">
-                    <div class="ringkasan-box">
+            <table class="ringkasan-table">
+                <tr>
+                    <td>
                         <div class="ringkasan-label">Total Warga Hadir</div>
                         <div class="ringkasan-value">{{ $totalHadir }} orang</div>
-                    </div>
-                    <div class="ringkasan-box">
-                        <div class="ringkasan-label">Total Presensi Tidak Lebih dari Jam 20.00 WIB</div>
+                    </td>
+                    <td>
+                        <div class="ringkasan-label">Presensi dibawah jam 20.00 WIB</div>
                         <div class="ringkasan-value">{{ $totalTepatWaktu }} orang</div>
-                    </div>
-                </div>
-            </div>
+                    </td>
+                </tr>
+            </table>
         </div>
 
         {{-- Total per blok --}}
@@ -284,8 +374,22 @@
         </div>
     </div>
 
-    <div class="footer-note">
-        Dicetak pada tanggal {{ $dicetakPada }}
+    {{-- ================= TANDA TANGAN ================= --}}
+    <div class="ttd-wrap">
+        <table class="ttd-table">
+            <tr>
+                <td>
+                    <div class="ttd-tempat-tanggal">Potorono, {{ \Carbon\Carbon::now()->addHours(7)->translatedFormat('d F Y') }}</div>
+                    <div class="ttd-jabatan">Ketua Panitia</div>
+                    <div class="ttd-nama">(...........................................)</div>
+                </td>
+                <td>
+                    <div class="ttd-tempat-tanggal">&nbsp;</div>
+                    <div class="ttd-jabatan">Mengetahui,<br>Ketua RT</div>
+                    <div class="ttd-nama">(...........................................)</div>
+                </td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>
