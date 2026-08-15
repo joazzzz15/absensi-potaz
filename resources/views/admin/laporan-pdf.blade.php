@@ -342,7 +342,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Anak-anak (5–11 tahun)</td>
+                        <td>Anak-anak (1–11 tahun)</td>
                         <td class="angka">{{ $rekapUsia['anak'] }}</td>
                     </tr>
                     <tr>
@@ -359,7 +359,7 @@
                     </tr>
                     @if ($rekapUsia['lainnya'] > 0)
                         <tr>
-                            <td>Lainnya (di bawah 5 tahun)</td>
+                            <td>Lainnya (di bawah 1 tahun)</td>
                             <td class="angka">{{ $rekapUsia['lainnya'] }}</td>
                         </tr>
                     @endif

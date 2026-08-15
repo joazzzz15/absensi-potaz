@@ -118,11 +118,11 @@ class DashboardController extends Controller
         $rekap = $this->hitungRekapLaporan($data);
 
         $pdf = Pdf::loadView('admin.laporan-pdf', [
-            'data'        => $data,
-            'dicetakPada' => $dicetakPada,
-            'rekapBlok'   => $rekap['rekapBlok'],
-            'rekapUsia'   => $rekap['rekapUsia'],
-            'totalHadir'  => $rekap['totalHadir'],
+            'data'            => $data,
+            'dicetakPada'     => $dicetakPada,
+            'rekapBlok'       => $rekap['rekapBlok'],
+            'rekapUsia'       => $rekap['rekapUsia'],
+            'totalHadir'      => $rekap['totalHadir'],
             'totalTepatWaktu' => $rekap['totalTepatWaktu'],
         ])->setPaper('a4', 'portrait');
 
@@ -135,11 +135,11 @@ class DashboardController extends Controller
      * tidak lebih dari jam 20.00 WIB.
      *
      * Kelompok usia:
-     *  - Anak-anak : 5–11 tahun
+     *  - Anak-anak : 1–11 tahun
      *  - Remaja    : 12–25 tahun
      *  - Dewasa    : 26–45 tahun
      *  - Orang Tua/Lansia : di atas 45 tahun
-     * Data usia di bawah 5 tahun (jika ada) dimasukkan ke kelompok "Lainnya"
+     * Data usia di bawah 1 tahun (jika ada) dimasukkan ke kelompok "Lainnya"
      * supaya total rekap usia tetap sama dengan total hadir.
      */
     private function hitungRekapLaporan($data): array
@@ -148,11 +148,11 @@ class DashboardController extends Controller
         $rekapBlok = array_fill_keys(self::DAFTAR_BLOK, 0);
 
         $rekapUsia = [
-            'anak'    => 0, // 5–11 tahun
+            'anak'    => 0, // 1–11 tahun
             'remaja'  => 0, // 12–25 tahun
             'dewasa'  => 0, // 26–45 tahun
             'lansia'  => 0, // > 45 tahun
-            'lainnya' => 0, // < 5 tahun (jarang terjadi, jaga-jaga)
+            'lainnya' => 0, // < 1 tahun (jarang terjadi, jaga-jaga)
         ];
 
         $totalTepatWaktu = 0;
@@ -166,7 +166,7 @@ class DashboardController extends Controller
             // Rekap kelompok usia
             $usia = (int) $row->usia;
 
-            if ($usia >= 5 && $usia <= 11) {
+            if ($usia >= 1 && $usia <= 11) {
                 $rekapUsia['anak']++;
             } elseif ($usia >= 12 && $usia <= 25) {
                 $rekapUsia['remaja']++;
