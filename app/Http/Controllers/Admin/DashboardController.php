@@ -16,6 +16,11 @@ class DashboardController extends Controller
     private const MAX_RETRY_NOMOR_UNDIAN = 10;
     private const DAFTAR_BLOK = ['A', 'B', 'C', 'D', 'E'];
 
+    /**
+     * Batas jam presensi dianggap "tepat waktu" (WIB).
+     */
+    private const BATAS_JAM_TEPAT_WAKTU = '20:00:00';
+
     public function index(Request $request)
     {
         $query = Absensi::query();
@@ -82,6 +87,8 @@ class DashboardController extends Controller
      * Cetak PDF laporan kehadiran.
      * Selalu diurutkan berdasarkan Blok lalu Nomor Rumah,
      * mengikuti filter (search/blok/tanggal) yang aktif di halaman.
+     * Di bawah tabel ditambahkan rekap: total per blok, kelompok usia,
+     * total hadir, dan total yang presensi tidak lebih dari jam 20.00 WIB.
      */
     public function cetakPdf(Request $request)
     {
@@ -108,12 +115,82 @@ class DashboardController extends Controller
 
         $dicetakPada = Carbon::now()->addHours(7)->translatedFormat('d F Y H:i') . ' WIB';
 
+        $rekap = $this->hitungRekapLaporan($data);
+
         $pdf = Pdf::loadView('admin.laporan-pdf', [
             'data'        => $data,
             'dicetakPada' => $dicetakPada,
+            'rekapBlok'   => $rekap['rekapBlok'],
+            'rekapUsia'   => $rekap['rekapUsia'],
+            'totalHadir'  => $rekap['totalHadir'],
+            'totalTepatWaktu' => $rekap['totalTepatWaktu'],
         ])->setPaper('a4', 'portrait');
 
         return $pdf->stream('laporan-absensi-' . Carbon::now()->format('Ymd-His') . '.pdf');
+    }
+
+    /**
+     * Hitung rekap untuk laporan PDF: total peserta per blok, total per
+     * kelompok usia, total hadir keseluruhan, dan total yang presensinya
+     * tidak lebih dari jam 20.00 WIB.
+     *
+     * Kelompok usia:
+     *  - Anak-anak : 5–11 tahun
+     *  - Remaja    : 12–25 tahun
+     *  - Dewasa    : 26–45 tahun
+     *  - Orang Tua/Lansia : di atas 45 tahun
+     * Data usia di bawah 5 tahun (jika ada) dimasukkan ke kelompok "Lainnya"
+     * supaya total rekap usia tetap sama dengan total hadir.
+     */
+    private function hitungRekapLaporan($data): array
+    {
+        // Total per blok, mulai dari 0 supaya blok yang kosong tetap muncul di laporan
+        $rekapBlok = array_fill_keys(self::DAFTAR_BLOK, 0);
+
+        $rekapUsia = [
+            'anak'    => 0, // 5–11 tahun
+            'remaja'  => 0, // 12–25 tahun
+            'dewasa'  => 0, // 26–45 tahun
+            'lansia'  => 0, // > 45 tahun
+            'lainnya' => 0, // < 5 tahun (jarang terjadi, jaga-jaga)
+        ];
+
+        $totalTepatWaktu = 0;
+
+        foreach ($data as $row) {
+            // Rekap per blok
+            if (array_key_exists($row->blok_rumah, $rekapBlok)) {
+                $rekapBlok[$row->blok_rumah]++;
+            }
+
+            // Rekap kelompok usia
+            $usia = (int) $row->usia;
+
+            if ($usia >= 5 && $usia <= 11) {
+                $rekapUsia['anak']++;
+            } elseif ($usia >= 12 && $usia <= 25) {
+                $rekapUsia['remaja']++;
+            } elseif ($usia >= 26 && $usia <= 45) {
+                $rekapUsia['dewasa']++;
+            } elseif ($usia > 45) {
+                $rekapUsia['lansia']++;
+            } else {
+                $rekapUsia['lainnya']++;
+            }
+
+            // Rekap presensi tepat waktu (<= 20:00 WIB)
+            $jamWib = $row->created_at->copy()->addHours(7)->format('H:i:s');
+            if ($jamWib <= self::BATAS_JAM_TEPAT_WAKTU) {
+                $totalTepatWaktu++;
+            }
+        }
+
+        return [
+            'rekapBlok'       => $rekapBlok,
+            'rekapUsia'       => $rekapUsia,
+            'totalHadir'      => $data->count(),
+            'totalTepatWaktu' => $totalTepatWaktu,
+        ];
     }
 
     /**
