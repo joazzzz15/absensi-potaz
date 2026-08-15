@@ -336,13 +336,23 @@
         <div class="top-bar">
             <h1>Data Peserta &amp; Nomor Undian</h1>
             <div class="top-bar-actions">
-                <a href="{{ route('admin.peserta.create') }}" class="btn btn-tambah">+ Tambah Peserta</a>
-                <a href="{{ route('admin.rolet.index') }}" class="btn btn-nav">Undian</a>
-                <form method="POST" action="{{ route('admin.logout') }}">
-                    @csrf
-                    <button type="submit" class="btn-logout">Keluar</button>
-                </form>
-            </div>
+    <a href="{{ route('admin.peserta.create') }}" class="btn btn-tambah">+ Tambah Peserta</a>
+
+    @if (in_array(auth()->user()->name, ['Panitia', 'Tito']))
+        <a href="{{ route('admin.rolet.index') }}" class="btn btn-nav">Undian</a>
+    @endif
+
+    @if (auth()->user()->name === 'Panitia')
+        <a href="{{ route('admin.users.create') }}" class="btn btn-nav">+ User Baru</a>
+    @endif
+
+    <a href="{{ route('admin.profile.edit') }}" class="btn btn-nav">Profil Saya</a>
+
+    <form method="POST" action="{{ route('admin.logout') }}">
+        @csrf
+        <button type="submit" class="btn-logout">Keluar</button>
+    </form>
+</div>
         </div>
 
         @if (session('status'))

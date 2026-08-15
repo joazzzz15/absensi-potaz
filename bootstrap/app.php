@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
             Request::HEADER_X_FORWARDED_PORT |
             Request::HEADER_X_FORWARDED_PROTO
         );
+
+        $middleware->alias([
+            'panitia_or_tito' => \App\Http\Middleware\EnsurePanitiaOrTito::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
