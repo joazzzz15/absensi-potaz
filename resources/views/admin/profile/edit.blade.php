@@ -210,11 +210,11 @@
                     @enderror
                 </div>
 
-                <div class="field">
+                <!-- <div class="field">
                     <label for="email">Email</label>
                     <input type="email" id="email" value="{{ $user->email }}" disabled>
                     <span class="field-hint">Email tidak dapat diubah.</span>
-                </div>
+                </div> -->
 
                 <div class="section-title">Ganti Password (opsional)</div>
 
