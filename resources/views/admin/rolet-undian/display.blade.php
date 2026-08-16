@@ -21,6 +21,7 @@
             align-items: center;
             justify-content: center;
             padding: 30px;
+            position: relative;
         }
 
         .judul {
@@ -99,6 +100,49 @@
             color: rgba(255,255,255,0.6);
             letter-spacing: 1px;
         }
+
+        /* ==== SPONSOR TICKER ==== */
+        .sponsor-ticker-wrap {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 14px 0;
+            background: rgba(0,0,0,0.35);
+            border-top: 2px solid rgba(252, 216, 138, 0.5);
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .sponsor-ticker-label {
+            position: absolute;
+            top: -22px;
+            left: 20px;
+            font-size: 0.9vw;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .sponsor-ticker-track {
+            display: inline-block;
+            white-space: nowrap;
+            animation: geserSponsor 32s linear infinite;
+            font-size: 1.4vw;
+            font-weight: 700;
+            color: #fcd88a;
+            letter-spacing: 1px;
+        }
+
+        .sponsor-ticker-track span {
+            margin: 0 2.5vw;
+            display: inline-block;
+        }
+
+        @keyframes geserSponsor {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
     </style>
 </head>
 <body>
@@ -125,6 +169,59 @@
         @endif
     </div>
 
+    <div class="sponsor-ticker-wrap" id="sponsorTickerWrap" style="{{ $batchTerbaru ? 'display:none;' : '' }}">
+        <div class="sponsor-ticker-label">Sponsor by</div>
+        <div class="sponsor-ticker-track" id="sponsorTickerTrack">
+            <span>Abekani</span>
+            <span>The Bagbone</span>
+            <span>Bakul Gundam</span>
+            <span>Jawon Villa</span>
+            <span>Tera Indonesia</span>
+            <span>Gendhis Plug &amp; Play</span>
+            <span>Sajadah Jogja</span>
+            <span>Khananea Seprei Homade</span>
+            <span>Sajian Kembang Turi</span>
+            <span>Kopi Thiam</span>
+            <span>Angkringan Om Wit</span>
+            <span>Fabio Yoghurt</span>
+            <span>Bandeng Presto SKT</span>
+            <span>Bapak Wagiyo</span>
+            <span>Bapak Reza</span>
+            <span>Bapak Anton</span>
+            <span>Bapak Waluyo</span>
+            <span>Ibu Nuri</span>
+            <span>Ibu Yuni</span>
+            <span>Ibu Aris AKI</span>
+            <span>Mama Ave</span>
+            <span>Kak Sekar</span>
+            <span>Blok C</span>
+            <!-- duplikat supaya loop mulus -->
+            <span>Abekani</span>
+            <span>The Bagbone</span>
+            <span>Bakul Gundam</span>
+            <span>Jawon Villa</span>
+            <span>Tera Indonesia</span>
+            <span>Gendhis Plug &amp; Play</span>
+            <span>Sajadah Jogja</span>
+            <span>Khananea Seprei Homade</span>
+            <span>Sajian Kembang Turi</span>
+            <span>Kopi Thiam</span>
+            <span>Angkringan Om Wit</span>
+            <span>Fabio Yoghurt</span>
+            <span>Bandeng Presto SKT</span>
+            <span>Bapak Wagiyo</span>
+            <span>Bapak Reza</span>
+            <span>Bapak Anton</span>
+            <span>Bapak Waluyo</span>
+            <span>Ibu Nuri</span>
+            <span>Ibu Yuni</span>
+            <span>Ibu Aris AKI</span>
+            <span>Mama Ave</span>
+            <span>Kak Sekar</span>
+            <span>Blok C</span>
+        </div>
+    </div>
+
     <script>
         // ==== KONFIGURASI ====
         const URL_LATEST = "{{ route('rolet.latest') }}";
@@ -138,6 +235,7 @@
         const slotWrap = document.getElementById('slotWrap');
         const statusMenunggu = document.getElementById('statusMenunggu');
         const infoBatch = document.getElementById('infoBatch');
+        const sponsorTickerWrap = document.getElementById('sponsorTickerWrap');
 
         function angkaAcakTampilan() {
             return Math.floor(Math.random() * 900) + 100; // angka acak 3 digit untuk efek visual
@@ -171,6 +269,10 @@
 
             if (statusMenunggu) {
                 statusMenunggu.style.display = 'none';
+            }
+            // sponsor ticker hanya tampil saat menunggu, sembunyikan begitu hasil muncul
+            if (sponsorTickerWrap) {
+                sponsorTickerWrap.style.display = 'none';
             }
             slotWrap.style.display = 'flex';
 
