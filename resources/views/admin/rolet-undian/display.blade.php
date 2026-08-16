@@ -21,6 +21,7 @@
             align-items: center;
             justify-content: center;
             padding: 30px;
+            padding-bottom: 90px;
             position: relative;
         }
 
@@ -169,7 +170,7 @@
         @endif
     </div>
 
-    <div class="sponsor-ticker-wrap" id="sponsorTickerWrap" style="{{ $batchTerbaru ? 'display:none;' : '' }}">
+    <div class="sponsor-ticker-wrap" id="sponsorTickerWrap">
         <div class="sponsor-ticker-label">Sponsor by</div>
         <div class="sponsor-ticker-track" id="sponsorTickerTrack">
             <span>Abekani</span>
@@ -270,10 +271,7 @@
             if (statusMenunggu) {
                 statusMenunggu.style.display = 'none';
             }
-            // sponsor ticker hanya tampil saat menunggu, sembunyikan begitu hasil muncul
-            if (sponsorTickerWrap) {
-                sponsorTickerWrap.style.display = 'none';
-            }
+            // sponsor ticker tetap tampil baik saat menunggu maupun saat hasil undian muncul
             slotWrap.style.display = 'flex';
 
             for (let i = 0; i < 5; i++) {
