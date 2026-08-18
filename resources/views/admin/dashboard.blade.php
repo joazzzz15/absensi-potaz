@@ -277,13 +277,96 @@
             font-size: 14px;
         }
 
-        .pagination-wrap {
-            padding: 16px;
-        }
-
         .sort-arrow {
             font-size: 10px;
             margin-left: 2px;
+        }
+
+        /* === Pagination custom (inline, tanpa view tambahan) === */
+        .pagination-wrap {
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .pg-info {
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+
+        .pg-links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .pg-numbers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .pg-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 34px;
+            height: 34px;
+            padding: 0 10px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background: #fff;
+            color: #7a1010;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        a.pg-btn:hover {
+            background: #faf5ea;
+            border-color: #e6c98a;
+        }
+
+        .pg-btn.pg-active {
+            background: #7a1010;
+            border-color: #7a1010;
+            color: #fff;
+            cursor: default;
+        }
+
+        .pg-btn.pg-disabled {
+            color: #bbb;
+            background: #f7f7f7;
+            border-color: #eee;
+            cursor: not-allowed;
+        }
+
+        .pg-btn.pg-dots {
+            border: none;
+            background: transparent;
+            color: #999;
+            cursor: default;
+            min-width: auto;
+            padding: 0 4px;
+        }
+
+        @media (max-width: 640px) {
+            .pg-links {
+                gap: 4px;
+            }
+
+            .pg-btn {
+                min-width: 30px;
+                height: 30px;
+                padding: 0 8px;
+                font-size: 12px;
+            }
         }
 
         /* === Mobile friendly === */
@@ -500,9 +583,59 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="pagination-wrap">
-                    {{ $data->links() }}
-                </div>
+
+                {{-- === PAGINATION CUSTOM, LANGSUNG DI FILE INI, TANPA VIEW TAMBAHAN === --}}
+                @if ($data->hasPages())
+                    <div class="pagination-wrap">
+                        <div class="pg-info">
+                            Menampilkan <strong>{{ $data->firstItem() }}</strong>
+                            sampai <strong>{{ $data->lastItem() }}</strong>
+                            dari <strong>{{ $data->total() }}</strong> data
+                        </div>
+
+                        <div class="pg-links">
+                            {{-- Tombol Sebelumnya --}}
+                            @if ($data->onFirstPage())
+                                <span class="pg-btn pg-disabled" aria-disabled="true">&laquo; Sebelumnya</span>
+                            @else
+                                <a href="{{ $data->previousPageUrl() }}" class="pg-btn" rel="prev">&laquo; Sebelumnya</a>
+                            @endif
+
+                            {{-- Nomor Halaman --}}
+                            <div class="pg-numbers">
+                                @php
+                                    $halamanSekarang = $data->currentPage();
+                                    $totalHalaman    = $data->lastPage();
+                                    $jendela         = 2; // tampilkan 2 nomor di kiri & kanan halaman aktif
+                                    $halamanTerakhirDitampilkan = null;
+                                @endphp
+
+                                @for ($p = 1; $p <= $totalHalaman; $p++)
+                                    @if ($p == 1 || $p == $totalHalaman || ($p >= $halamanSekarang - $jendela && $p <= $halamanSekarang + $jendela))
+                                        @if ($halamanTerakhirDitampilkan && $p - $halamanTerakhirDitampilkan > 1)
+                                            <span class="pg-btn pg-dots">...</span>
+                                        @endif
+
+                                        @if ($p == $halamanSekarang)
+                                            <span class="pg-btn pg-active" aria-current="page">{{ $p }}</span>
+                                        @else
+                                            <a href="{{ $data->url($p) }}" class="pg-btn">{{ $p }}</a>
+                                        @endif
+
+                                        @php $halamanTerakhirDitampilkan = $p; @endphp
+                                    @endif
+                                @endfor
+                            </div>
+
+                            {{-- Tombol Selanjutnya --}}
+                            @if ($data->hasMorePages())
+                                <a href="{{ $data->nextPageUrl() }}" class="pg-btn" rel="next">Selanjutnya &raquo;</a>
+                            @else
+                                <span class="pg-btn pg-disabled" aria-disabled="true">Selanjutnya &raquo;</span>
+                            @endif
+                        </div>
+                    </div>
+                @endif
             @endif
         </div>
     </div>
