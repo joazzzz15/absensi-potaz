@@ -8,10 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsurePanitiaOrTito
 {
-    /**
-     * Hanya izinkan user dengan name = 'Panitia' atau 'Tito'
-     * mengakses fitur Undian (baik lewat menu maupun akses URL langsung).
-     */
     public function handle(Request $request, Closure $next): Response
     {
         $nama = $request->user()?->name;
